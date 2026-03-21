@@ -22,6 +22,12 @@ function generateTile() {
     }; 
 }
 
+function drawGrid(){
+    tiles.forEach(tile => {
+        tile.draw();
+    })
+}
+
 function moveTileRight(i, j) {
     let col;
     for(col = j; col < COLS-1 && !grid[i][col + 1]; col++) {
@@ -138,10 +144,4 @@ function moveTilesDown() {
                 moveTileDown(i, j);
         }
     }
-}
-
-function drawGrid(){
-    tiles.forEach(tile => {
-        tile.draw();
-    })
 }

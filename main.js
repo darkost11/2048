@@ -25,6 +25,8 @@ function mainLoop() {
     if (tilesMoving) {
         animTiles(dt);
     }
+    animTilesPopUp(dt);
+
     clearCanvas();
     drawGrid();
 

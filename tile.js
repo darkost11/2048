@@ -1,4 +1,4 @@
-const ANIM_TIME = 0.1;
+const ANIM_TIME = 0.15;
 let timePassed = 0;
 let tilesMoving = false;
 
@@ -13,8 +13,9 @@ const COLORS = {
     256: "#ff7b00",
     512: "#fd5724",
     1024: "#ff0000",
-    2048: "#ff0088",
-    5096: "#ff00cc",
+    2048: "#ff00e1",
+    4096: "#b300ff",
+    8192: "#6600ff"
 }
 class Tile {
     constructor(i, j, val) {
@@ -31,6 +32,12 @@ class Tile {
         this.startY;
 
         this.calcNewCoords();
+
+        this.popUpTimePassed = 0;
+        this.centerX = this.x + TILE_SIZE/2;
+        this.centerY = this.y + TILE_SIZE/2;
+        this.isPoppingUp = true;
+        this.size = 0;
 
         this.merged = false;
     }
@@ -53,7 +60,7 @@ class Tile {
         this.distanceY = this.newY - this.startY;
     }
 
-    animate(dt) {
+    animate() {
         this.x = this.startX + this.distanceX * timePassed / ANIM_TIME;
         this.y = this.startY + this.distanceY * timePassed / ANIM_TIME;
     }
@@ -64,11 +71,26 @@ class Tile {
         this.calcCoords();
     }
 
+    animatePopUp(dt) {
+       this.popUpTimePassed += dt;
+       this.size = Math.min(TILE_SIZE * this.popUpTimePassed / ANIM_TIME, TILE_SIZE);
+       this.x = this.centerX - this.size / 2;
+       this.y = this.centerY - this.size / 2;
+       if (this.popUpTimePassed >= ANIM_TIME) {
+           this.endPopUpAnim();
+       }
+    }
+
+    endPopUpAnim() {
+        this.size = TILE_SIZE;
+        this.isPoppingUp = false;
+    }
+
     draw() {
         let color = COLORS[this.val];
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, TILE_SIZE, TILE_SIZE);
+        ctx.fillRect(this.x, this.y, this.size, this.size);
 
         ctx.font = "60px arial";
         ctx.fillStyle = "black";
@@ -93,10 +115,10 @@ function startTilesAnim() {
 }
 
 function animTiles(dt) {
-    tiles.forEach(tile => {
-        tile.animate(dt);
-    })
     timePassed += dt;
+    tiles.forEach(tile => {
+        tile.animate();
+    })
     if (timePassed >= ANIM_TIME) {
         endTilesAnim();
     }
@@ -111,6 +133,13 @@ function endTilesAnim() {
     cleanMerged();
 }
 
+function animTilesPopUp(dt) {
+    tiles.forEach(tile => {
+        if (tile.isPoppingUp) {
+            tile.animatePopUp(dt);
+        }
+    })
+}
 function cleanMerged(){
     tiles = tiles.filter(tile => {
         return !tile.merged;

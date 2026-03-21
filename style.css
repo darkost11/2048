@@ -3,7 +3,7 @@ body {
     margin: 0;
 }
 #canvas {
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     position: absolute;
     width: 600px;
     height: 600px;
