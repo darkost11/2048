@@ -100,7 +100,6 @@ function animTiles(dt) {
     if (timePassed >= ANIM_TIME) {
         endTilesAnim();
     }
-    
 }
 
 function endTilesAnim() {
@@ -109,8 +108,12 @@ function endTilesAnim() {
     tiles.forEach(tile => {
         tile.endAnim();
     })
-  
     cleanMerged();
-  
+}
+
+function cleanMerged(){
+    tiles = tiles.filter(tile => {
+        return !tile.merged;
+    })
 }
 
