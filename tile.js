@@ -2,16 +2,37 @@ const ANIM_TIME = 0.1;
 let timePassed = 0;
 let tilesMoving = false;
 
+const COLORS = {
+    2: "#00ff91",
+    4: "#2fff00",
+    8: "#88ff43",
+    16: "#c3ff00",
+    32: "#f8fc0b",
+    64: "#fdc200",
+    128: "#ffa200",
+    256: "#ff7b00",
+    512: "#fd5724",
+    1024: "#ff0000",
+    2048: "#ff0088",
+    5096: "#ff00cc",
+}
 class Tile {
     constructor(i, j, val) {
+
         this.val = val;
         this.i = i;
         this.j = j;
+
         this.calcCoords();
+
         this.newI = i;
         this.newJ = j;
+        this.startX;
+        this.startY;
+
         this.calcNewCoords();
-        this.animTime = ANIM_TIME;
+
+        this.merged = false;
     }
 
     calcCoords() {
@@ -24,31 +45,29 @@ class Tile {
         this.newY = TILE_SIZE * this.newI + TILE_GAP * (this.newI + 1);
     }
 
-    startAnimation() {
-        tilesMoving = true;
-        timePassed = false;
-        this.distance = this.newX - this.x;
-    }
-
-    endAnimation() {
-        this.i = this.newI;
-        this.j = this.newJ;
-        this.calcCoords();
-        tilesMoving = false;
+    startAnim() {
+        this.calcNewCoords();
+        this.startX = this.x;
+        this.startY = this.y;
+        this.distanceX = this.newX - this.startX;
+        this.distanceY = this.newY - this.startY;
     }
 
     animate(dt) {
-        timePassed += dt;
-        this.x += Math.min(distance * timePassed / ANIM_TIME, distance);
-        if (timePassed > ANIM_TIME) {
-            this.endAnimation();
-        }
+        this.x = this.startX + this.distanceX * timePassed / ANIM_TIME;
+        this.y = this.startY + this.distanceY * timePassed / ANIM_TIME;
+    }
+
+    endAnim() {
+        this.i = this.newI;
+        this.j = this.newJ;
+        this.calcCoords();
     }
 
     draw() {
-        this.calcCoords();
+        let color = COLORS[this.val];
         ctx.beginPath();
-        ctx.fillStyle = "red";
+        ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, TILE_SIZE, TILE_SIZE);
 
         ctx.font = "60px arial";
@@ -62,7 +81,36 @@ class Tile {
         );
 
         ctx.closePath();
-        
     }
+}
+
+function startTilesAnim() {
+    tilesMoving = true;
+    timePassed = 0;
+    tiles.forEach(tile => {
+        tile.startAnim();
+    })
+}
+
+function animTiles(dt) {
+    tiles.forEach(tile => {
+        tile.animate(dt);
+    })
+    timePassed += dt;
+    if (timePassed >= ANIM_TIME) {
+        endTilesAnim();
+    }
+    
+}
+
+function endTilesAnim() {
+    tilesMoving = false;
+    timePassed = 0;
+    tiles.forEach(tile => {
+        tile.endAnim();
+    })
+  
+    cleanMerged();
+  
 }
 

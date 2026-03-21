@@ -10,31 +10,44 @@ const nCols = 4;
 const TILE_SIZE = 120;
 const TILE_GAP = 24;
 
+let tile1 = new Tile(0, 0, 2);
+let tile2 = new Tile(0, 3, 2);
+let tiles = [tile1, tile2];
 const grid = [
-    [new Tile(0, 0, 2), 0, 0, new Tile(0, 3, 2)],
+    [tile1, 0, 0, tile2],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
-function drawGrid(){
-    
-    for (let i = 0; i < nRows; i++) {
-        for (let j = 0; j < nCols; j++) {
-            let tile = grid[i][j];
-            if (tile) {
-                tile.draw(i, j);
-            }
-        }
-    }
+
+let t0 = Date.now();
+let dt;
+
+function calcDt(){
+    const t1 = Date.now();
+    dt = (t1 - t0) / 1000;
+    t0 = t1;
+    return dt;
 }
 
+function drawGrid(){
+    tiles.forEach(tile => {
+        tile.draw();
+    })
+}
+
+function cleanMerged() {
+    tiles = tiles.filter(tile => {
+        return !tile.merged;
+    })
+}
 function moveTileRight(i, j) {
     let col;
     for(col = j; col < nCols-1 && !grid[i][col + 1]; col++) {
         let tile = grid[i][col];
         grid[i][col] = 0;
         grid[i][col + 1] = tile;
-        tile.j++;
+        tile.newJ++;
     }
     if (col < nCols - 1 ) {
         tile1 = grid[i][col];
@@ -42,6 +55,8 @@ function moveTileRight(i, j) {
         if (tile1.val == tile2.val) {
             grid[i][col] = 0;
             tile2.val *= 2;
+            tile1.newJ++;
+            tile1.merged = true;
         }     
     }
 }
@@ -52,7 +67,7 @@ function moveTileLeft(i, j) {
         let tile = grid[i][col];
         grid[i][col] = 0;
         grid[i][col - 1] = tile;
-        tile.j--;
+        tile.newJ--;
     }
 
     if (col > 0) {
@@ -61,6 +76,8 @@ function moveTileLeft(i, j) {
         if (tile1.val == tile2.val) {
             grid[i][col] = 0;
             tile2.val *= 2;
+            tile1.newJ--;
+            tile1.merged = true;
         }     
     }
 }
@@ -71,7 +88,7 @@ function moveTileUp(i, j) {
         let tile = grid[row][j];
         grid[row][j] = 0;
         grid[row - 1][j] = tile;
-        tile.i--;
+        tile.newI--;
     }
 
     if (row > 0) {
@@ -80,6 +97,8 @@ function moveTileUp(i, j) {
         if (tile1.val == tile2.val) {
             grid[row][j] = 0;
             tile2.val *= 2;
+            tile1.newI--;
+            tile1.merged = true;
         }     
     }
 }
@@ -90,7 +109,7 @@ function moveTileDown(i, j) {
         let tile = grid[row][j];
         grid[row][j] = 0;
         grid[row + 1][j] = tile;
-        tile.i++;
+        tile.newI++;
     }
     if (row < nRows-1) {
         tile1 = grid[row][j];
@@ -98,6 +117,8 @@ function moveTileDown(i, j) {
         if (tile1.val == tile2.val) {
             grid[row][j] = 0;
             tile2.val *= 2;
+            tile1.newI++;
+            tile1.merged = true;
         }     
     }
 }
@@ -150,11 +171,15 @@ function generateTile() {
     if (emptyCells.length > 0){
         const idx = Math.floor(Math.random() * emptyCells.length);
         const [i, j] = emptyCells[idx];
-        grid[i][j] = new Tile(val);
+        let newTile = new Tile(i, j, val);
+        grid[i][j] = newTile;
+        tiles.push(newTile);
     };
+    
 }
 window.addEventListener("keydown", (e) => {
     if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.key)){
+        endTilesAnim();
         if (e.key == 'ArrowRight') {
             console.log("moving tiles right");
             moveTilesRight();
@@ -173,22 +198,26 @@ window.addEventListener("keydown", (e) => {
             console.log("moving tiles down");
             moveTilesDown();
         }
-        // generateTile();
-        // clearCanvas();
-        // drawGrid();
-        console.log(grid);
+        generateTile();
+        startTilesAnim();
     }
 })
 
 function mainLoop() {
+    dt = calcDt();
+    if (tilesMoving) {
+        animTiles(dt);
+    }
     clearCanvas();
     drawGrid();
+    console.log(tile1.y);
+
     requestAnimationFrame(mainLoop);
 }
 
-drawGrid();
 mainLoop();
 
 function clearCanvas() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    
 }
