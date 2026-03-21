@@ -6,20 +6,22 @@ function getEmptyCells() {
                 emptyCells.push([i, j]);
         }
     }
-    return emptyCells;
+    return (emptyCells.length > 0) ? emptyCells : null;
 }
 
 function generateTile() {
     const val = Math.pow(2, Math.floor(Math.random()*2 + 1));
     
     let emptyCells = getEmptyCells();
-    if (emptyCells.length > 0){
+    if (emptyCells) {
         const idx = Math.floor(Math.random() * emptyCells.length);
         const [i, j] = emptyCells[idx];
         let newTile = new Tile(i, j, val);
         grid[i][j] = newTile;
         tiles.push(newTile);
-    }; 
+        return true;
+    }
+    return false;
 }
 
 function drawGrid(){
@@ -144,4 +146,52 @@ function moveTilesDown() {
                 moveTileDown(i, j);
         }
     }
+}
+
+function isMoveRightAvailable() {
+    for (let i = 0; i < ROWS; i++){
+        for (let j = 0; j < COLS - 1; j++) {
+            let tile1 = grid[i][j];
+            let tile2 = grid[i][j+1];
+            if (tile1.val == tile2.val || (tile1 && !tile2))
+                return true;
+        }
+    }
+    return false;
+}
+
+function isMoveLeftAvailable() {
+    for (let i = 0; i < ROWS; i++){
+        for (let j = COLS-1; j > 0; j--) {
+            let tile1 = grid[i][j];
+            let tile2 = grid[i][j-1];
+            if (tile1.val == tile2.val || (tile1 && !tile2))
+                return true;
+        }
+    }
+    return false;
+}
+
+function isMoveUpAvailable() {
+    for (let i = ROWS-1; i > 0; i--){
+        for (let j = 0; j < COLS; j++) {
+            let tile1 = grid[i][j];
+            let tile2 = grid[i-1][j];
+            if (tile1.val == tile2.val || (tile1 && !tile2))
+                return true;
+        }
+    }
+    return false;
+}
+
+function isMoveDownAvailable() {
+    for (let i = 0; i < ROWS-1; i++) {
+        for (let j = 0; j < COLS; j++) {
+            let tile1 = grid[i][j];
+            let tile2 = grid[i+1][j];
+            if (tile1.val == tile2.val || (tile1 && !tile2))
+                return true;
+        }
+    }
+    return false;
 }

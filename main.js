@@ -18,9 +18,23 @@ const grid = [
 ];
 generateTile();
 generateTile();
+let isTileGenerated = true;
 
+function isGameOver() {
+    return !(
+        isMoveRightAvailable() ||
+        isMoveLeftAvailable() ||
+        isMoveUpAvailable() ||
+        isMoveDownAvailable()
+    )
+}
+
+function reloadWindow() {
+    window.location.reload();
+}
 
 function mainLoop() {
+        
     dt = calcDt();
     if (tilesMoving) {
         animTiles(dt);
