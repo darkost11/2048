@@ -1,28 +1,33 @@
 window.addEventListener("keydown", (e) => {
-    if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.key)){
+    if (["Enter", "KeyR", "Space"].includes(e.code)){
+        if (isGameOver()) {
+            handleRestartGame();
+        }
+    }
+    else if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.code)){
 
         endTilesAnim();
 
-        if (e.key == 'ArrowRight') {
+        if (e.code == 'ArrowRight') {
             handleMoveRight();
         }
 
-        else if (e.key == "ArrowLeft") {
+        else if (e.code == "ArrowLeft") {
             handleMoveLeft();
         }
 
-        else if (e.key == "ArrowUp") {
+        else if (e.code == "ArrowUp") {
             handleMoveUp();
         }
 
-        else if (e.key == "ArrowDown") {
+        else if (e.code == "ArrowDown") {
             handleMoveDown();
         }
 
         startTilesAnim();
 
         if (isGameOver()) {
-            setTimeout(reloadWindow, 2000);
+            setTimeout(displayGameOverScreen, 1000);
         }
     }
 })
@@ -66,3 +71,11 @@ function handleMoveDown() {
     else 
         console.log("can't go down");
 }
+
+function handleRestartGame() {
+    reloadWindow();
+}
+
+NEW_GAME_BUTTON.addEventListener('click', () => {
+    handleRestartGame();
+});

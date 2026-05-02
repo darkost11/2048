@@ -34,3 +34,47 @@ body {
     position: absolute;
     right: 0;
 }
+
+#game-over {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 38%;
+    height: 30%;
+    background-color: rgb(252, 252, 252);
+    color:rgb(0, 0, 0);
+    font-size: 40px;
+    border: 2px solid black;
+    font-family:'Courier New', Courier, monospace;
+
+    display: none;
+
+}
+
+#game-over .message {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+#game-over .score {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    transform: translateY(50%);
+}
+
+#game-over .new-game-button {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    bottom: 0;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: rgb(214, 214, 214);
+    transform: translateX(-2px);
+    cursor: pointer;
+}
