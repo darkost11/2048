@@ -6,6 +6,7 @@
     <title>2048</title>
 </head>
 <body>
+    <div id="swipe-area"></div>
     <div id="canvas-container">
         <canvas id="canvas"></canvas>
         <div id="hud">
@@ -18,7 +19,9 @@
             <div class="new-game-button">New game</div>
         </div>
         <div id="blur"></div>
+      
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="data.js"></script>
     <script src="hud.js"></script>
     <script src="utils.js"></script>

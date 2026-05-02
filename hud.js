@@ -5,10 +5,11 @@ const GAME_OVER_SCREEN = document.querySelector("#game-over");
 const GAME_OVER_SCORE = document.querySelector("#game-over .score");
 const NEW_GAME_BUTTON = document.querySelector("#game-over .new-game-button");
 
-let currentScore = 0;
-let highScore;
-loadHighScore();
-updateHud();
+function initScores() {
+    currentScore = 0;
+    loadHighScore();
+    updateHud();
+}
 
 function updateScoreDisplay() {
     SCORE.textContent = `Score: ${currentScore}`;
@@ -39,8 +40,10 @@ function updateScores(val) {
 }
 
 function displayGameOverScreen() {
+    
     canvas.style.setProperty('filter', 'blur(5px)');
     GAME_OVER_SCORE.textContent = `Score:\n${currentScore}`;
+    swipeArea.style.setProperty('display', 'none');
     GAME_OVER_SCREEN.style.setProperty('display', 'block');
 }
 

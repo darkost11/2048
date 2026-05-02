@@ -1,6 +1,7 @@
 const ANIM_TIME = 0.15;
 let timePassed = 0;
 let tilesMoving = false;
+const FONT_SIZE = 60;
 
 const COLORS = {
     2: "#00ff91",
@@ -86,6 +87,7 @@ class Tile {
 
     endPopUpAnim() {
         this.size = TILE_SIZE;
+        this.popUpTimePassed = ANIM_TIME;
         this.isPoppingUp = false;
     }
 
@@ -95,17 +97,26 @@ class Tile {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.size, this.size);
 
-        ctx.font = "60px arial";
+        ctx.font = `${FONT_SIZE * this.popUpTimePassed/ANIM_TIME}px arial`;
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(
-            this.val.toString(),
-            this.x + TILE_SIZE/2,
-            this.y + TILE_SIZE/2, 1000
-        );
+
+        if (this.isPoppingUp) {
+            ctx.fillText(
+                this.val.toString(),
+                this.centerX,
+                this.centerY, 1000
+            )
+        } else {
+            ctx.fillText(
+                this.val.toString(),
+                this.x + TILE_SIZE/2,
+                this.y + TILE_SIZE/2, 1000
+            );
 
         ctx.closePath();
+        }
     }
 }
 

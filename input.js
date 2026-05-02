@@ -1,3 +1,48 @@
+const swipeArea = document.getElementById('swipe-area');
+const hammer = new Hammer(swipeArea);
+
+hammer.get('swipe').set({
+    direction: Hammer.DIRECTION_ALL,
+    threshold: 20,
+    velocity: 0.5
+});
+
+hammer.on('swiperight', () => {
+    endTilesAnim();
+    handleMoveRight();
+    startTilesAnim();
+    if (isGameOver()) {
+        setTimeout(displayGameOverScreen, 1000);
+    }
+});
+
+hammer.on('swipeleft', () => {
+    endTilesAnim();
+    handleMoveLeft();
+    startTilesAnim();
+    if (isGameOver()) {
+        setTimeout(displayGameOverScreen, 1000);
+    }
+});
+
+hammer.on('swipeup', () => {
+    endTilesAnim();
+    handleMoveUp();
+    startTilesAnim();
+    if (isGameOver()) {
+        setTimeout(displayGameOverScreen, 1000);
+    }
+});
+
+hammer.on('swipedown', () => {
+    endTilesAnim();
+    handleMoveDown();
+    startTilesAnim();
+    if (isGameOver()) {
+        setTimeout(displayGameOverScreen, 1000);
+    }
+});
+
 window.addEventListener("keydown", (e) => {
     if (["Enter", "KeyR", "Space"].includes(e.code)){
         if (isGameOver()) {

@@ -18,6 +18,7 @@ const grid = [
     [0, 0, 0, 0]
 ];
 
+initScores();
 generateTile();
 generateTile();
 let isTileGenerated = true;
