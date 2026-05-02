@@ -10,12 +10,14 @@ const TILE_SIZE = 120;
 const TILE_GAP = 24;
 
 let tiles = [];
+
 const grid = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
+
 generateTile();
 generateTile();
 let isTileGenerated = true;

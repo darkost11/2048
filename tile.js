@@ -24,6 +24,9 @@ class Tile {
         this.i = i;
         this.j = j;
 
+        grid[i][j] = this;
+        tiles.push(this);
+
         this.calcCoords();
 
         this.newI = i;

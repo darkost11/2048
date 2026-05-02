@@ -17,8 +17,6 @@ function generateTile() {
         const idx = Math.floor(Math.random() * emptyCells.length);
         const [i, j] = emptyCells[idx];
         let newTile = new Tile(i, j, val);
-        grid[i][j] = newTile;
-        tiles.push(newTile);
         return true;
     }
     return false;
@@ -43,9 +41,9 @@ function moveTileRight(i, j) {
         tile2 = grid[i][col + 1];
         if (tile1.val == tile2.val) {
             grid[i][col] = 0;
-            tile2.val *= 2;
+            let newTile = new Tile(i, col + 1, tile1.val*2);
             tile1.newJ++;
-            tile1.merged = true;
+            tile1.merged = tile2.merged = true;
         }     
     }
 }
@@ -64,9 +62,9 @@ function moveTileLeft(i, j) {
         tile2 = grid[i][col - 1];
         if (tile1.val == tile2.val) {
             grid[i][col] = 0;
-            tile2.val *= 2;
+            let newTile = new Tile(i, col - 1, tile1.val*2);
             tile1.newJ--;
-            tile1.merged = true;
+            tile1.merged = tile2.merged = true;
         }     
     }
 }
@@ -78,6 +76,7 @@ function moveTileUp(i, j) {
         grid[row][j] = 0;
         grid[row - 1][j] = tile;
         tile.newI--;
+
     }
 
     if (row > 0) {
@@ -85,9 +84,9 @@ function moveTileUp(i, j) {
         tile2 = grid[row - 1][j];
         if (tile1.val == tile2.val) {
             grid[row][j] = 0;
-            tile2.val *= 2;
+            let newTile = new Tile(row - 1, j, tile1.val*2);
             tile1.newI--;
-            tile1.merged = true;
+            tile1.merged = tile2.merged = true;
         }     
     }
 }
@@ -105,9 +104,9 @@ function moveTileDown(i, j) {
         tile2 = grid[row + 1][j];
         if (tile1.val == tile2.val) {
             grid[row][j] = 0;
-            tile2.val *= 2;
+            let newTile = new Tile(row + 1, j, tile1.val*2);
             tile1.newI++;
-            tile1.merged = true;
+            tile1.merged = tile2.merged = true;
         }     
     }
 }
