@@ -3,11 +3,16 @@ const SCORE = document.querySelector("#hud #score");
 const HIGH_SCORE = document.querySelector("#hud #high-score");
 const GAME_OVER_SCREEN = document.querySelector("#game-over");
 const GAME_OVER_SCORE = document.querySelector("#game-over .score");
-const NEW_GAME_BUTTON = document.querySelector("#game-over .new-game-button");
+const NEW_HIGH_SCORE_MESSAGE = document.querySelector("#toolbar #new-high-score-message");
+
+let currentScore;
+let highScore;
+let oldHighScore;
 
 function initScores() {
     currentScore = 0;
     loadHighScore();
+    oldHighScore = highScore;
     updateHud();
 }
 
@@ -40,10 +45,19 @@ function updateScores(val) {
 }
 
 function displayGameOverScreen() {
-    
     canvas.style.setProperty('filter', 'blur(5px)');
-    GAME_OVER_SCORE.textContent = `Score:\n${currentScore}`;
     swipeArea.style.setProperty('display', 'none');
+    GAME_OVER_SCORE.textContent = `Score:\n${currentScore}`;
     GAME_OVER_SCREEN.style.setProperty('display', 'block');
+    if (highScore > oldHighScore) {
+        displayNewHighScoreMessage();
+    }
 }
 
+function updateNewHighScoreMessage() {
+    NEW_HIGH_SCORE_MESSAGE.textContent = `New high score! Old: ${oldHighScore}`;
+}
+function displayNewHighScoreMessage() {
+    updateNewHighScoreMessage();
+    NEW_HIGH_SCORE_MESSAGE.style.setProperty('display', 'block');
+}

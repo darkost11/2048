@@ -49,23 +49,26 @@ window.addEventListener("keydown", (e) => {
             handleRestartGame();
         }
     }
-    else if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.code)){
+    else if ([
+        "ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown",
+        "KeyD", "KeyA", "KeyW", "KeyS" 
+    ].includes(e.code)){
 
         endTilesAnim();
 
-        if (e.code == 'ArrowRight') {
+        if (e.code == 'ArrowRight' || e.code == "KeyD") {
             handleMoveRight();
         }
 
-        else if (e.code == "ArrowLeft") {
+        else if (e.code == "ArrowLeft" || e.code == "KeyA") {
             handleMoveLeft();
         }
 
-        else if (e.code == "ArrowUp") {
+        else if (e.code == "ArrowUp" || e.code == "KeyW") {
             handleMoveUp();
         }
 
-        else if (e.code == "ArrowDown") {
+        else if (e.code == "ArrowDown" || e.code == "KeyS") {
             handleMoveDown();
         }
 
@@ -121,6 +124,8 @@ function handleRestartGame() {
     reloadWindow();
 }
 
-NEW_GAME_BUTTON.addEventListener('click', () => {
-    handleRestartGame();
-});
+document.addEventListener('click', e => {
+    if (e.target.classList.contains("new-game-button")) {
+        handleRestartGame();
+    }
+}); 

@@ -6,14 +6,19 @@
     <title>2048</title>
 </head>
 <body>
-    <div id="swipe-area"></div>
+   
     <div id="canvas-container">
+        <div id="swipe-area"></div>
         <canvas id="canvas"></canvas>
-        <div id="hud">
+        <div id="toolbar" class="text">
+            <div class="new-game-button">New game</div>
+            <div id="new-high-score-message">New high score!</div>
+        </div>
+        <div id="hud" class="text">
             <div id="score">Score: 0</div>
             <div id="high-score">High Score: 0</div>
         </div>
-        <div id="game-over">
+        <div id="game-over" class="text">
             <span class="message">Game over</span>
             <span class="score">Score: <br> 0</span>
             <div class="new-game-button">New game</div>
