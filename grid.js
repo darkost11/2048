@@ -44,6 +44,7 @@ function moveTileRight(i, j) {
             let newTile = new Tile(i, col + 1, tile1.val*2);
             tile1.newJ++;
             tile1.merged = tile2.merged = true;
+            updateScores(tile1.val * 2);
         }     
     }
 }
@@ -65,6 +66,7 @@ function moveTileLeft(i, j) {
             let newTile = new Tile(i, col - 1, tile1.val*2);
             tile1.newJ--;
             tile1.merged = tile2.merged = true;
+            updateScores(tile1.val * 2);
         }     
     }
 }
@@ -87,6 +89,7 @@ function moveTileUp(i, j) {
             let newTile = new Tile(row - 1, j, tile1.val*2);
             tile1.newI--;
             tile1.merged = tile2.merged = true;
+            updateScores(tile1.val * 2);
         }     
     }
 }
@@ -107,6 +110,7 @@ function moveTileDown(i, j) {
             let newTile = new Tile(row + 1, j, tile1.val*2);
             tile1.newI++;
             tile1.merged = tile2.merged = true;
+            updateScores(tile1.val * 2);
         }     
     }
 }

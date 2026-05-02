@@ -2,12 +2,35 @@ body {
     padding: 0;
     margin: 0;
 }
+
+#canvas-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
 #canvas {
     background-color: rgb(235, 235, 235);
     border: 2px black solid;
-    position: absolute;
     width: 600px;
     height: 600px;
-    left: 50%;
-    transform: translateX(-50%);
+}
+
+#hud {
+    position: absolute;
+    width: 100%;
+    color: black;
+    font-size: 30px;
+    font-family:'Courier New', Courier, monospace;
+    bottom: 0;
+    transform: translateY(100%);
+}
+
+#hud #score {
+    position: absolute;
+    left: 0;
+}
+
+#hud #high-score {
+    position: absolute;
+    right: 0;
 }
