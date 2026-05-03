@@ -1,7 +1,7 @@
 const ANIM_TIME = 0.15;
 let timePassed = 0;
 let tilesMoving = false;
-const FONT_SIZE = 60;
+let fontSize = 60;
 
 const COLORS = {
     2: "#00ff91",
@@ -38,8 +38,8 @@ class Tile {
         this.calcNewCoords();
 
         this.popUpTimePassed = 0;
-        this.centerX = this.x + TILE_SIZE/2;
-        this.centerY = this.y + TILE_SIZE/2;
+        this.centerX = this.x + tileSize/2;
+        this.centerY = this.y + tileSize/2;
         this.isPoppingUp = true;
         this.size = 0;
 
@@ -47,13 +47,13 @@ class Tile {
     }
 
     calcCoords() {
-        this.x = TILE_SIZE * this.j + TILE_GAP * (this.j + 1);
-        this.y = TILE_SIZE * this.i + TILE_GAP * (this.i + 1);
+        this.x = tileSize * this.j + tileGap * (this.j + 1);
+        this.y = tileSize * this.i + tileGap * (this.i + 1);
     }
 
     calcNewCoords() {
-        this.newX = TILE_SIZE * this.newJ + TILE_GAP * (this.newJ + 1);
-        this.newY = TILE_SIZE * this.newI + TILE_GAP * (this.newI + 1);
+        this.newX = tileSize * this.newJ + tileGap * (this.newJ + 1);
+        this.newY = tileSize * this.newI + tileGap * (this.newI + 1);
     }
 
     startAnim() {
@@ -77,7 +77,7 @@ class Tile {
 
     animatePopUp(dt) {
        this.popUpTimePassed += dt;
-       this.size = Math.min(TILE_SIZE * this.popUpTimePassed / ANIM_TIME, TILE_SIZE);
+       this.size = Math.min(tileSize * this.popUpTimePassed / ANIM_TIME, tileSize);
        this.x = this.centerX - this.size / 2;
        this.y = this.centerY - this.size / 2;
        if (this.popUpTimePassed >= ANIM_TIME) {
@@ -86,7 +86,7 @@ class Tile {
     }
 
     endPopUpAnim() {
-        this.size = TILE_SIZE;
+        this.size = tileSize;
         this.popUpTimePassed = ANIM_TIME;
         this.isPoppingUp = false;
     }
@@ -97,7 +97,7 @@ class Tile {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.size, this.size);
 
-        ctx.font = `${FONT_SIZE * this.popUpTimePassed/ANIM_TIME}px arial`;
+        ctx.font = `${fontSize * this.popUpTimePassed/ANIM_TIME}px arial`;
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -111,8 +111,8 @@ class Tile {
         } else {
             ctx.fillText(
                 this.val.toString(),
-                this.x + TILE_SIZE/2,
-                this.y + TILE_SIZE/2, 1000
+                this.x + tileSize/2,
+                this.y + tileSize/2, 1000
             );
 
         ctx.closePath();
@@ -154,9 +154,28 @@ function animTilesPopUp(dt) {
         }
     })
 }
+
 function cleanMerged(){
     tiles = tiles.filter(tile => {
         return !tile.merged;
     })
+}
+
+function calcTileCoords() {
+    tiles.forEach(tile => {
+        tile.calcCoords();
+        tile.calcNewCoords();
+    })
+}
+
+function resizeTiles() {
+    tiles.forEach(tile => {
+        tile.size = tileSize;
+    })
+}
+
+function calcFontSize() {
+    rect = canvas.getBoundingClientRect();
+    fontSize = Math.min(rect.width * 0.1, 60);
 }
 

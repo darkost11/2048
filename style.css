@@ -1,3 +1,4 @@
+
 body {
     padding: 0;
     margin: 0;
@@ -7,8 +8,10 @@ body {
 
 #canvas-container {
     position: absolute;
+    padding-top: 40px;
+    padding-bottom: 40px;
     left: 50%;
-    top: 50%;
+    top: 50vh;
     transform: translate(-50%, -50%);
 }
 #canvas {
@@ -21,13 +24,13 @@ body {
 .text {
     font-family:'Courier New', Courier, monospace;
     color: black;
-    font-size: 30px;
+    font-size: clamp(10px, 5vw, 30px);
 }
 
 #hud {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 40px;
     transform: translateY(100%);
 }
 
@@ -46,10 +49,10 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 38%;
+    width: 40%;
     height: 30%;
     background-color: rgb(252, 252, 252);
-    font-size: 40px;
+    font-size: clamp(14px, 6vw, 40px);
     border: 2px solid black;
     display: none;
 
@@ -73,7 +76,7 @@ body {
     position: absolute;
     width: 100%;
     height: 40px;
-    top: 0;
+    top: 40px;
     transform: translateY(-100%);
 }
 
@@ -89,6 +92,7 @@ body {
 #toolbar .new-game-button {
     position: absolute;
     right: 0;
+    bottom: 2px;
     border: 2px solid black;
     background-color: rgb(230, 230, 230);
 }
@@ -112,4 +116,11 @@ body {
     height: 100vh;
     left: 50%;
     transform: translateX(-50%); 
+}
+
+@media (max-width: 620px) {
+    #canvas {
+        width: 94vmin;
+        height: 94vmin;
+    }
 }

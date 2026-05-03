@@ -47,7 +47,7 @@ function updateScores(val) {
 function displayGameOverScreen() {
     canvas.style.setProperty('filter', 'blur(5px)');
     swipeArea.style.setProperty('display', 'none');
-    GAME_OVER_SCORE.textContent = `Score:\n${currentScore}`;
+    GAME_OVER_SCORE.innerHTML = `Score:<br>${currentScore}`;
     GAME_OVER_SCREEN.style.setProperty('display', 'block');
     if (highScore > oldHighScore) {
         displayNewHighScoreMessage();

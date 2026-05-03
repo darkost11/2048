@@ -9,5 +9,21 @@ function calcDt(){
 }
 
 function clearCanvas() {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.clearRect(0, 0, width, height);
 }
+
+function syncSize() {
+    const rect = canvas.getBoundingClientRect();
+
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+
+    tileSize = canvas.width / 600 * 120;
+    tileGap = canvas.width / 500 * 20;
+    calcTileCoords();
+    resizeTiles();
+    calcFontSize();
+}
+
+window.addEventListener('load', syncSize);
+window.addEventListener('resize', syncSize);
