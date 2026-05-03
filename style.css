@@ -55,7 +55,6 @@ body {
     font-size: clamp(14px, 6vw, 40px);
     border: 2px solid black;
     display: none;
-
 }
 
 #game-over .message {
@@ -82,9 +81,17 @@ body {
 
 .new-game-button {
     cursor: pointer;
+    user-select: none;
+}
+
+.new-game-button:hover {
+    filter: brightness(1.2);
 }
 
 #new-high-score-message {
+    position: absolute;
+    bottom: 2px;
+    font-size: clamp(10px, 4vw, 24px);
     display: none;
 }
 
@@ -121,5 +128,11 @@ body {
     #canvas {
         width: 94vmin;
         height: 94vmin;
+    }
+
+    #game-over .new-game-button {
+        position:absolute;
+        bottom: -36vh;
+        height: 40px;
     }
 }
