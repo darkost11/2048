@@ -11,8 +11,8 @@ body {
     padding-top: 40px;
     padding-bottom: 40px;
     left: 50%;
-    top: 50vh;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+    top: 5vh;
 }
 #canvas {
     background-color: rgb(235, 235, 235);
@@ -85,7 +85,6 @@ body {
 }
 
 #new-high-score-message {
-    font-size: 28px;
     display: none;
 }
 

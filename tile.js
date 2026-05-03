@@ -1,4 +1,4 @@
-const ANIM_TIME = 0.15;
+const ANIM_TIME = 0.12;
 let timePassed = 0;
 let tilesMoving = false;
 let fontSize = 60;

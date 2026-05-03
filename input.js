@@ -3,7 +3,7 @@ const hammer = new Hammer(swipeArea);
 
 hammer.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,
-    threshold: 20,
+    threshold: 5,
     velocity: 0.5
 });
 
@@ -82,42 +82,31 @@ window.addEventListener("keydown", (e) => {
 
 function handleMoveRight() {
     if (isMoveRightAvailable()) {
-        console.log("moving tiles right");
         moveTilesRight();
         isTileGenerated = generateTile();
     }
-    else 
-        console.log("can't go right");
 }
 
 function handleMoveLeft() {
     if (isMoveLeftAvailable()) {
-        console.log("moving tiles to the left");
+
         moveTilesLeft();
         isTileGenerated = generateTile();
-    }
-    else
-        console.log("can't go left")     
+    }  
 }
 
 function handleMoveUp() {
     if (isMoveUpAvailable()) {
-        console.log("moving tiles up");
         moveTilesUp();
         isTileGenerated = generateTile();
     }
-    else
-        console.log("can't go up");
 }
 
 function handleMoveDown() {
     if (isMoveDownAvailable()) {
-        console.log("moving tiles down");
         moveTilesDown();
         isTileGenerated = generateTile();
     }
-    else 
-        console.log("can't go down");
 }
 
 function handleRestartGame() {
